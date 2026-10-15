@@ -1,0 +1,56 @@
+name: mini-food
+
+# Shared backend configuration. Override any value from the shell or a root
+# `.env` file, e.g. JWT_SECRET=... docker compose up
+x-backend-env: &backend-env
+  DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-mini_food}?schema=public
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-mini_food}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # One-off job: applies SQL migrations and seeds demo data (idempotent).
+  migrate:
+    build:
+      context: ./backend
+      target: migrator
+    environment:
+      <<: *backend-env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+      target: runtime
+    environment:
+      <<: *backend-env
+      PORT: 3001
+      # Development default only – always override in real deployments.
+      JWT_SECRET: ${JWT_SECRET:-insecure-dev-secret-change-me-0123456789abcdef}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    ports:
+      - "3001:3001"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  db-data:
