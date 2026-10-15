@@ -13,7 +13,7 @@ export default function LoginPage() {
       title="Welcome back"
       description="Log in to order from your favourite restaurants."
       footer={
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col gap-2">
           <p>
             New here?{" "}
             <Link href="/register" className="font-medium text-primary hover:underline">

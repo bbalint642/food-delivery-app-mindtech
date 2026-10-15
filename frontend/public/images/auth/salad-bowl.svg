@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title">
+  <title id="title">Fresh salad bowl</title>
+  <defs>
+    <radialGradient id="bowl" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e9ebe6"/>
+    </radialGradient>
+    <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#000" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6fcf62"/>
+      <stop offset="100%" stop-color="#2f8f3a"/>
+    </linearGradient>
+    <linearGradient id="leafB" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4caf50"/>
+      <stop offset="100%" stop-color="#1f6b2c"/>
+    </linearGradient>
+    <linearGradient id="avocado" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d9ef9a"/>
+      <stop offset="100%" stop-color="#9ccc4e"/>
+    </linearGradient>
+    <radialGradient id="chickpea" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#ffd27a"/>
+      <stop offset="100%" stop-color="#d9862a"/>
+    </radialGradient>
+    <radialGradient id="potato" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#f7c57a"/>
+      <stop offset="100%" stop-color="#b9641f"/>
+    </radialGradient>
+    <linearGradient id="cabbage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b56fd1"/>
+      <stop offset="100%" stop-color="#6a2a8e"/>
+    </linearGradient>
+    <radialGradient id="dip" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#eef5d8"/>
+      <stop offset="100%" stop-color="#bcd68a"/>
+    </radialGradient>
+    <radialGradient id="tomato" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ff8a6a"/>
+      <stop offset="100%" stop-color="#c62a1e"/>
+    </radialGradient>
+    <clipPath id="inner">
+      <circle cx="320" cy="320" r="262"/>
+    </clipPath>
+  </defs>
+
+  <!-- drop shadow -->
+  <ellipse cx="326" cy="338" rx="300" ry="300" fill="url(#shadow)"/>
+
+  <!-- bowl -->
+  <circle cx="320" cy="320" r="296" fill="url(#bowl)"/>
+  <circle cx="320" cy="320" r="296" fill="none" stroke="#d9dcd5" stroke-width="2"/>
+  <circle cx="320" cy="320" r="266" fill="#f4f6f1"/>
+  <circle cx="320" cy="320" r="266" fill="none" stroke="#dde1d8" stroke-width="3"/>
+
+  <g clip-path="url(#inner)">
+    <!-- bed of leaves -->
+    <g fill="url(#leafA)">
+      <path d="M120 300c40-80 120-110 200-90-60 40-110 90-150 160-30-10-50-40-50-70z"/>
+      <path d="M470 150c70 30 110 110 90 190-50-60-110-100-180-120 20-40 50-70 90-70z"/>
+      <path d="M200 520c-60-40-90-110-70-180 50 60 110 100 180 120-20 40-60 60-110 60z"/>
+      <path d="M540 420c-20 80-90 130-170 120 50-50 80-110 90-180 40 10 70 30 80 60z"/>
+    </g>
+    <g fill="url(#leafB)">
+      <path d="M250 140c60-30 130-20 180 30-60 10-120 40-160 90-30-30-40-80-20-120z"/>
+      <path d="M90 420c20-70 80-120 150-120-30 50-40 110-30 170-50 0-100-20-120-50z"/>
+      <path d="M330 560c-70 0-130-40-160-100 60 20 120 20 180-10 10 40 0 80-20 110z"/>
+      <path d="M560 260c10 70-20 140-80 180 10-60 0-120-30-170 40-20 80-20 110-10z"/>
+    </g>
+    <!-- centre cluster so the bowl reads as full -->
+    <g fill="url(#leafA)">
+      <path d="M250 250c50-40 120-40 170 0-50 20-90 60-110 110-40-20-60-60-60-110z"/>
+      <path d="M420 300c40 40 50 100 20 150-30-40-80-70-130-80 20-40 60-70 110-70z"/>
+      <path d="M230 330c60-10 120 20 150 70-60 0-110 30-150 70-20-50-20-100 0-140z"/>
+    </g>
+    <g fill="url(#leafB)">
+      <path d="M300 200c60 0 110 40 130 100-60-20-120-10-170 20-10-50 0-90 40-120z"/>
+      <path d="M380 380c30 50 20 110-20 150-10-60-40-110-90-140 40-20 80-20 110-10z"/>
+      <path d="M200 280c50 20 80 70 80 130-50-30-110-30-160-10 0-50 30-100 80-120z"/>
+    </g>
+    <!-- leaf veins -->
+    <g fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round">
+      <path d="M150 350c40-60 90-100 150-130"/>
+      <path d="M470 180c40 40 70 90 80 150"/>
+      <path d="M170 500c40-10 90-30 130-60"/>
+      <path d="M520 400c-20 40-50 80-90 110"/>
+      <path d="M270 160c40 0 90 20 130 50"/>
+    </g>
+
+    <!-- purple cabbage -->
+    <g fill="none" stroke="url(#cabbage)" stroke-width="9" stroke-linecap="round">
+      <path d="M380 210c30-10 60 10 80 40"/>
+      <path d="M400 250c40-20 70 0 90 30"/>
+      <path d="M170 440c30 10 60-10 80-40"/>
+      <path d="M210 470c40 20 70 0 90-30"/>
+      <path d="M430 470c20-30 60-40 90-20"/>
+      <path d="M250 180c-30 20-40 50-30 80"/>
+    </g>
+
+    <!-- roasted potatoes -->
+    <g fill="url(#potato)" stroke="#8a4a14" stroke-opacity="0.35" stroke-width="2">
+      <ellipse cx="455" cy="420" rx="40" ry="34"/>
+      <ellipse cx="500" cy="340" rx="36" ry="30"/>
+      <ellipse cx="420" cy="500" rx="34" ry="30"/>
+      <ellipse cx="160" cy="250" rx="36" ry="32"/>
+    </g>
+    <g fill="#ffe3b3" fill-opacity="0.7">
+      <ellipse cx="445" cy="410" rx="14" ry="10"/>
+      <ellipse cx="490" cy="330" rx="12" ry="9"/>
+      <ellipse cx="150" cy="242" rx="13" ry="9"/>
+    </g>
+
+    <!-- avocado slices -->
+    <g fill="url(#avocado)" stroke="#5c8a2e" stroke-width="3">
+      <path d="M360 100c40-20 90-10 120 30-30 20-70 35-110 40-10-25-15-50-10-70z"/>
+      <path d="M395 125c40-15 85 0 110 35-30 15-70 25-110 25-5-20-5-40 0-60z"/>
+      <path d="M430 150c40-10 80 10 100 45-30 10-65 15-100 10-5-20-5-40 0-55z"/>
+    </g>
+
+    <!-- chickpeas -->
+    <g fill="url(#chickpea)">
+      <circle cx="300" cy="420" r="13"/>
+      <circle cx="330" cy="445" r="12"/>
+      <circle cx="360" cy="420" r="13"/>
+      <circle cx="320" cy="470" r="12"/>
+      <circle cx="560" cy="300" r="12"/>
+      <circle cx="540" cy="330" r="11"/>
+      <circle cx="120" cy="330" r="12"/>
+      <circle cx="140" cy="360" r="11"/>
+      <circle cx="260" cy="110" r="12"/>
+      <circle cx="290" cy="130" r="11"/>
+      <circle cx="380" cy="320" r="13"/>
+      <circle cx="410" cy="300" r="12"/>
+    </g>
+
+    <!-- cherry tomatoes -->
+    <g fill="url(#tomato)">
+      <circle cx="230" cy="380" r="26"/>
+      <circle cx="470" cy="245" r="24"/>
+      <circle cx="350" cy="530" r="22"/>
+    </g>
+    <g fill="#ffffff" fill-opacity="0.45">
+      <ellipse cx="220" cy="370" rx="8" ry="5"/>
+      <ellipse cx="461" cy="236" rx="7" ry="4"/>
+      <ellipse cx="342" cy="522" rx="6" ry="4"/>
+    </g>
+
+    <!-- seeds -->
+    <g fill="#fff3c4" stroke="#c99d4a" stroke-width="1">
+      <ellipse cx="300" cy="260" rx="7" ry="3" transform="rotate(20 300 260)"/>
+      <ellipse cx="340" cy="280" rx="7" ry="3" transform="rotate(-30 340 280)"/>
+      <ellipse cx="200" cy="300" rx="7" ry="3" transform="rotate(50 200 300)"/>
+      <ellipse cx="500" cy="470" rx="7" ry="3" transform="rotate(-10 500 470)"/>
+      <ellipse cx="260" cy="520" rx="7" ry="3" transform="rotate(35 260 520)"/>
+      <ellipse cx="420" cy="360" rx="7" ry="3" transform="rotate(-50 420 360)"/>
+      <ellipse cx="180" cy="180" rx="7" ry="3" transform="rotate(15 180 180)"/>
+    </g>
+    <g fill="#2b2b2b" fill-opacity="0.75">
+      <circle cx="280" cy="240" r="2"/><circle cx="360" cy="300" r="2"/><circle cx="240" cy="330" r="2"/>
+      <circle cx="450" cy="380" r="2"/><circle cx="300" cy="490" r="2"/><circle cx="520" cy="250" r="2"/>
+      <circle cx="200" cy="470" r="2"/><circle cx="390" cy="470" r="2"/><circle cx="330" cy="180" r="2"/>
+    </g>
+  </g>
+
+  <!-- dip bowl -->
+  <circle cx="215" cy="455" r="78" fill="#000" fill-opacity="0.12"/>
+  <circle cx="210" cy="450" r="76" fill="#ffffff"/>
+  <circle cx="210" cy="450" r="76" fill="none" stroke="#d9dcd5" stroke-width="2"/>
+  <circle cx="210" cy="450" r="62" fill="url(#dip)"/>
+  <g fill="#2b2b2b" fill-opacity="0.6">
+    <circle cx="190" cy="430" r="2"/><circle cx="225" cy="440" r="2"/><circle cx="205" cy="465" r="2"/>
+    <circle cx="235" cy="470" r="2"/><circle cx="180" cy="460" r="2"/><circle cx="215" cy="420" r="2"/>
+  </g>
+  <g fill="#2f8f3a" fill-opacity="0.8">
+    <circle cx="200" cy="448" r="3"/><circle cx="228" cy="455" r="3"/><circle cx="188" cy="475" r="3"/>
+  </g>
+</svg>
