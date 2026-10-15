@@ -56,8 +56,17 @@ const ARC_DECORATIONS = [
 ] as const
 
 /**
+ * Where the transparent platter cut-out (882x715) sits inside the
+ * 1600x1067 photo, as percentages of the photo. Measured by image
+ * registration: scale 1.253, offset (298, 15) px.
+ */
+const BOWL_IN_PHOTO = { left: "18.63%", top: "1.41%", width: "69.06%" }
+
+/**
  * Right-hand side of the auth panel: the salad photo fills the whole area
- * (cropped, never distorted) with the decorations arranged around it.
+ * (cropped, never distorted). On top of it, a cut-out of the same platter
+ * is aligned pixel-exactly with the photo but is NOT clipped, so the whole
+ * bowl stays visible and spills over the panel edge.
  */
 export function AuthShowcase() {
   return (
@@ -66,7 +75,7 @@ export function AuthShowcase() {
       <div className="absolute inset-0 overflow-hidden rounded-r-[2rem]">
         <Image
           src="/images/auth/salad.webp"
-          alt="A platter of taco salad with avocado, tomatoes, corn and cilantro"
+          alt=""
           fill
           priority
           // With object-cover the 3:2 photo is scaled to the panel height
@@ -74,6 +83,27 @@ export function AuthShowcase() {
           sizes="(min-width: 768px) 840px, 100vw"
           className="object-cover"
         />
+      </div>
+
+      {/*
+        Unclipped box with the photo's exact object-cover geometry: as tall
+        as the column, 3:2 wide, centred. The column is always narrower than
+        3:2 (≤ ~560px wide, ≥ 520px tall), so cover scales by height, exactly
+        like this box does.
+      */}
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 aspect-[1600/1067] -translate-x-1/2">
+        <div
+          className="absolute aspect-[882/715] drop-shadow-[0_18px_24px_rgb(0_0_0/0.18)]"
+          style={BOWL_IN_PHOTO}
+        >
+          <Image
+            src="/images/auth/salad-bowl.webp"
+            alt="A platter of taco salad with avocado, tomatoes, corn and cilantro"
+            fill
+            priority
+            sizes="(min-width: 768px) 600px, 100vw"
+          />
+        </div>
       </div>
 
       {ARC_DECORATIONS.map((decoration, index) => (
