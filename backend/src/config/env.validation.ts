@@ -1,11 +1,13 @@
 import * as Joi from 'joi';
+import type { StringValue } from 'ms';
 
 export interface Env {
   NODE_ENV: 'development' | 'production' | 'test';
   PORT: number;
   DATABASE_URL: string;
   JWT_SECRET: string;
-  JWT_EXPIRES_IN: string;
+  /** Token lifetime such as `15m` or `1h` (format enforced below). */
+  JWT_EXPIRES_IN: StringValue;
   /** Comma-separated list of allowed origins. */
   CORS_ORIGINS: string;
 }
