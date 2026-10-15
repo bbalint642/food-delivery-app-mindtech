@@ -15,10 +15,12 @@ interface FloatingDecorProps {
   /** Seconds per float cycle; vary it so the pieces don't move in lockstep. */
   duration?: number
   delay?: number
+  /** Gaussian blur in px, for a depth-of-field "out of focus" look. */
+  blur?: number
 }
 
 /**
- * A leaf / vegetable that gently floats, placed outside the panel bounds.
+ * A leaf / vegetable that gently floats, typically spilling over the panel.
  * Purely decorative: hidden from assistive tech, static with reduced motion.
  */
 export function FloatingDecor({
@@ -28,6 +30,7 @@ export function FloatingDecor({
   rotate = 0,
   duration = 6,
   delay = 0,
+  blur = 0,
 }: FloatingDecorProps) {
   const reducedMotion = useReducedMotion()
 
@@ -54,6 +57,7 @@ export function FloatingDecor({
         fill
         sizes={`${size * 2}px`}
         className="object-contain"
+        style={blur ? { filter: `blur(${blur}px)` } : undefined}
       />
     </motion.div>
   )

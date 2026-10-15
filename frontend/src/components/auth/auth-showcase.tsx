@@ -2,9 +2,57 @@ import Image from "next/image"
 import { FloatingDecor } from "./floating-decor"
 
 /**
+ * Leaves and tomatoes arranged along an arc around the platter, clockwise
+ * from the top: some sit inside the photo, others spill over the panel
+ * edge. The front tomato is slightly blurred for depth of field.
+ * Positions are relative to the showcase so they follow the panel size.
+ */
+const ARC_DECORATIONS = [
+  {
+    src: "/images/auth/bazsalikom-level.webp",
+    size: 104,
+    rotate: 35,
+    duration: 6.5,
+    className: "-top-12 -right-8",
+  },
+  {
+    src: "/images/auth/narancs-paradicsom.webp",
+    size: 70,
+    rotate: 10,
+    duration: 6,
+    delay: 1,
+    className: "top-[42%] -right-10",
+  },
+  {
+    src: "/images/auth/paradicsom.webp",
+    size: 100,
+    rotate: -10,
+    duration: 5.5,
+    delay: 0.4,
+    className: "-bottom-8 right-[6%]",
+  },
+  {
+    src: "/images/auth/fel-paradicsom.webp",
+    size: 76,
+    rotate: -18,
+    duration: 7,
+    delay: 0.8,
+    blur: 1.5,
+    className: "-bottom-14 left-[34%]",
+  },
+  {
+    src: "/images/auth/bazsalikom-level.webp",
+    size: 96,
+    rotate: -150,
+    duration: 7.5,
+    delay: 1.4,
+    className: "bottom-[18%] -left-11",
+  },
+] as const
+
+/**
  * Right-hand side of the auth panel: the salad photo fills the whole area
- * (cropped, never distorted), with two tomatoes spilling over the
- * panel edge.
+ * (cropped, never distorted) with the decorations arranged around it.
  */
 export function AuthShowcase() {
   return (
@@ -23,22 +71,9 @@ export function AuthShowcase() {
         />
       </div>
 
-      <FloatingDecor
-        src="/images/auth/narancs-paradicsom.webp"
-        size={76}
-        rotate={12}
-        duration={6}
-        delay={1}
-        className="-top-9 -right-8"
-      />
-      <FloatingDecor
-        src="/images/auth/paradicsom.webp"
-        size={104}
-        rotate={-10}
-        duration={5.5}
-        delay={0.4}
-        className="-right-10 -bottom-12"
-      />
+      {ARC_DECORATIONS.map((decoration, index) => (
+        <FloatingDecor key={index} {...decoration} />
+      ))}
     </div>
   )
 }
