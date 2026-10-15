@@ -4,7 +4,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { envValidationSchema } from './config/env.validation';
+import { OrdersModule } from './orders/orders.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RestaurantsModule } from './restaurants/restaurants.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -18,6 +20,8 @@ import { UsersModule } from './users/users.module';
     PrismaModule,
     UsersModule,
     AuthModule,
+    RestaurantsModule,
+    OrdersModule,
   ],
   providers: [
     // Secure by default: all routes require a JWT unless marked @Public().
