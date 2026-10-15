@@ -3,7 +3,7 @@ import { FloatingDecor } from "./floating-decor"
 
 /**
  * Right-hand side of the auth panel: the salad photo fills the whole area
- * (cropped, never distorted), with a leaf and a tomato spilling over the
+ * (cropped, never distorted), with two tomatoes spilling over the
  * panel edge.
  */
 export function AuthShowcase() {
@@ -24,19 +24,20 @@ export function AuthShowcase() {
       </div>
 
       <FloatingDecor
-        src="/images/auth/leaf.svg"
-        size={72}
-        rotate={-35}
+        src="/images/auth/narancs-paradicsom.webp"
+        size={76}
+        rotate={12}
         duration={6}
-        className="-right-9 top-[58%]"
+        delay={1}
+        className="-top-9 -right-8"
       />
       <FloatingDecor
-        src="/images/auth/tomato.svg"
-        size={88}
-        rotate={-12}
+        src="/images/auth/paradicsom.webp"
+        size={104}
+        rotate={-10}
         duration={5.5}
         delay={0.4}
-        className="-right-6 -bottom-8"
+        className="-right-10 -bottom-12"
       />
     </div>
   )

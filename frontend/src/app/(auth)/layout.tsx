@@ -12,11 +12,19 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <div className="relative w-full max-w-5xl">
         {/* Decorations that spill outside the card on the left */}
         <FloatingDecor
-          src="/images/auth/leaf.svg"
-          size={64}
-          rotate={25}
+          src="/images/auth/bazsalikom-level.webp"
+          size={110}
+          rotate={-35}
           duration={6.5}
-          className="-top-8 -left-4 hidden md:block"
+          className="-top-12 -left-12 hidden md:block"
+        />
+        <FloatingDecor
+          src="/images/auth/fel-paradicsom.webp"
+          size={84}
+          rotate={-15}
+          duration={7}
+          delay={0.6}
+          className="-bottom-10 left-[10%] hidden md:block"
         />
 
         <section className="grid overflow-visible rounded-[2rem] border bg-card shadow-2xl shadow-primary/10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">

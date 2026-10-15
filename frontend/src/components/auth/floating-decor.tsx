@@ -5,7 +5,9 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface FloatingDecorProps {
+  /** Transparent cut-out image. */
   src: string
+  /** Width and height of the (square) box; the image is fitted inside it. */
   size: number
   className?: string
   /** Base rotation in degrees. */
@@ -32,17 +34,27 @@ export function FloatingDecor({
   return (
     <motion.div
       aria-hidden
-      className={cn("pointer-events-none absolute drop-shadow-lg", className)}
+      className={cn(
+        "pointer-events-none absolute z-10 drop-shadow-[0_12px_14px_rgb(0_0_0/0.22)]",
+        className,
+      )}
       style={{ width: size, height: size }}
       initial={{ rotate, y: 0 }}
       animate={
         reducedMotion
           ? { rotate }
-          : { y: [0, -14, 0], rotate: [rotate, rotate + 8, rotate] }
+          : { y: [0, -12, 0], rotate: [rotate, rotate + 6, rotate] }
       }
       transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
     >
-      <Image src={src} alt="" fill unoptimized sizes={`${size}px`} />
+      {/* object-contain keeps non-square cut-outs (e.g. the leaf) undistorted */}
+      <Image
+        src={src}
+        alt=""
+        fill
+        sizes={`${size * 2}px`}
+        className="object-contain"
+      />
     </motion.div>
   )
 }
