@@ -2,18 +2,30 @@ import Image from "next/image"
 import { FloatingDecor } from "./floating-decor"
 
 /**
- * Leaves and tomatoes arranged along an arc around the platter, clockwise
- * from the top: some sit inside the photo, others spill over the panel
- * edge. The front tomato is slightly blurred for depth of field.
- * Positions are relative to the showcase so they follow the panel size.
+ * Leaves and tomatoes arranged around the platter, clockwise from the top:
+ * some sit inside the photo, others spill over the panel edge. The top
+ * tomato is slightly blurred for depth of field.
+ * Vertical/horizontal positions inside the photo are percentages so they
+ * follow the panel size; overflow past the edge is in px.
  */
 const ARC_DECORATIONS = [
   {
+    // Half tomato peeking over the top edge, left of centre
+    src: "/images/auth/fel-paradicsom.webp",
+    size: 76,
+    rotate: -18,
+    duration: 7,
+    delay: 0.8,
+    blur: 1.5,
+    className: "-top-[53px] left-[18%]",
+  },
+  {
+    // Leaf spilling over the right edge, upper third
     src: "/images/auth/bazsalikom-level.webp",
     size: 104,
-    rotate: 35,
+    rotate: 20,
     duration: 6.5,
-    className: "-top-12 -right-8",
+    className: "top-[24%] -right-[86px]",
   },
   {
     src: "/images/auth/narancs-paradicsom.webp",
@@ -24,29 +36,22 @@ const ARC_DECORATIONS = [
     className: "top-[42%] -right-10",
   },
   {
+    // Whole red tomato spilling over the right edge, near the bottom
     src: "/images/auth/paradicsom.webp",
     size: 100,
     rotate: -10,
     duration: 5.5,
     delay: 0.4,
-    className: "-bottom-8 right-[6%]",
+    className: "bottom-[7%] -right-[66px]",
   },
   {
-    src: "/images/auth/fel-paradicsom.webp",
-    size: 76,
-    rotate: -18,
-    duration: 7,
-    delay: 0.8,
-    blur: 1.5,
-    className: "-bottom-14 left-[34%]",
-  },
-  {
+    // Leaf resting on the photo near the bottom-left
     src: "/images/auth/bazsalikom-level.webp",
     size: 96,
-    rotate: -150,
+    rotate: -160,
     duration: 7.5,
     delay: 1.4,
-    className: "bottom-[18%] -left-11",
+    className: "bottom-[4%] left-[22%]",
   },
 ] as const
 
