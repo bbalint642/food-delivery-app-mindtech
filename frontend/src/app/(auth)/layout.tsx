@@ -8,8 +8,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     <main className="relative flex flex-1 flex-col items-center justify-center overflow-x-hidden bg-gradient-to-br from-orange-50 via-background to-emerald-50 px-4 py-12 dark:from-orange-950/20 dark:via-background dark:to-emerald-950/20">
       <ThemeToggle className="absolute top-4 right-4 z-20" />
 
-      <div className="relative w-full max-w-5xl">
-        <section className="grid overflow-visible rounded-[2rem] border bg-card shadow-2xl shadow-primary/10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+      {/*
+        Wide enough that the unclipped salad/sauce cut-outs (xl+) never
+        reach the form, even on the taller register page with errors shown.
+      */}
+      <div className="relative w-full max-w-7xl">
+        <section className="grid overflow-visible rounded-[2rem] border bg-card shadow-2xl shadow-primary/10 md:grid-cols-2">
           <div className="flex flex-col justify-center gap-8 px-6 py-10 sm:px-10 md:py-14 lg:px-14">
             <Brand href="/login" />
             {children}
