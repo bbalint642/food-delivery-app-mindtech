@@ -6,3 +6,7 @@
 Thumbs.db
 .vscode/
 .idea/
+.cursor/
+
+# Assignment brief, kept only on this machine
+Fullstack React_TS Home Assignment.pdf
