@@ -19,7 +19,12 @@ export interface CartState {
 }
 
 export type CartAction =
-  | { type: "add"; item: Pick<MenuItem, "id" | "name" | "priceCents"> }
+  | {
+      type: "add"
+      item: Pick<MenuItem, "id" | "name" | "priceCents">
+      /** How many to add. Defaults to 1. */
+      quantity?: number
+    }
   | { type: "increment"; menuItemId: string }
   | { type: "decrement"; menuItemId: string }
   | { type: "remove"; menuItemId: string }
@@ -49,10 +54,14 @@ function changeQuantity(
 export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "add": {
+      const amount = Math.min(
+        MAX_QUANTITY,
+        Math.max(1, action.quantity ?? 1),
+      )
       const exists = state.lines.some(
         (line) => line.menuItemId === action.item.id,
       )
-      if (exists) return changeQuantity(state, action.item.id, 1)
+      if (exists) return changeQuantity(state, action.item.id, amount)
       return {
         lines: [
           ...state.lines,
@@ -60,7 +69,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
             menuItemId: action.item.id,
             name: action.item.name,
             unitPriceCents: action.item.priceCents,
-            quantity: 1,
+            quantity: amount,
           },
         ],
       }

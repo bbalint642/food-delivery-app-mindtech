@@ -15,7 +15,8 @@ export type TransitionVariant =
   | "rectangle"
   | "star"
 
-interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
+interface AnimatedThemeTogglerProps
+  extends Omit<React.ComponentPropsWithoutRef<"button">, "children"> {
   duration?: number
   variant?: TransitionVariant
   /** When true, the transition expands from the viewport center instead of the button center. */
@@ -27,6 +28,8 @@ interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"butt
   theme?: "light" | "dark"
   /** Called on toggle. Pair with `theme` for controlled usage. */
   onThemeChange?: (theme: "light" | "dark") => void
+  /** Custom button content; defaults to a sun/moon icon. */
+  renderIcon?: (isDark: boolean) => React.ReactNode
 }
 
 function polygonCollapsed(point: string, vertexCount: number): string {
@@ -157,6 +160,7 @@ export const AnimatedThemeToggler = ({
   fromCenter = false,
   theme,
   onThemeChange,
+  renderIcon,
   ...props
 }: AnimatedThemeTogglerProps) => {
   const shape = variant ?? "circle"
@@ -323,8 +327,8 @@ export const AnimatedThemeToggler = ({
       className={cn(className)}
       {...props}
     >
-      {isDark ? <Sun /> : <Moon />}
-      <span className="sr-only">Toggle theme</span>
+      {renderIcon ? renderIcon(isDark) : isDark ? <Sun /> : <Moon />}
+      <span className="sr-only">Témaváltó</span>
     </button>
   )
 }

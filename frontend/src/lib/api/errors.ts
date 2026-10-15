@@ -34,6 +34,39 @@ export class ApiError extends Error {
   }
 }
 
+const KNOWN_MESSAGES: Record<string, string> = {
+  "Something went wrong": "Valami hiba történt",
+  "Cannot reach the server. Please check your connection.":
+    "A szerver nem érhető el. Ellenőrizd a kapcsolatot.",
+  "An order must contain at least one item":
+    "A rendelésnek legalább egy tételt kell tartalmaznia.",
+  "Each menu item may appear only once; use quantity instead":
+    "Minden étel csak egyszer szerepelhet. Használd a mennyiséget.",
+  "Order total exceeds the allowed maximum":
+    "A rendelés összege meghaladja a megengedett maximumot.",
+  "Restaurant not found": "Az étterem nem található.",
+  "Order not found": "A rendelés nem található.",
+  "Resource not found": "A kért adat nem található.",
+}
+
+/** Turns known API messages into Hungarian for the signed-in screens. */
+function localizeMessage(message: string): string {
+  const exact = KNOWN_MESSAGES[message]
+  if (exact) return exact
+
+  const unavailable = /^Menu items currently unavailable: (.+)$/.exec(message)
+  if (unavailable) {
+    return `Ezek az ételek jelenleg nem elérhetők: ${unavailable[1]}`
+  }
+
+  const missing = /^Menu items not found in this restaurant: (.+)$/.exec(message)
+  if (missing) {
+    return `Ezek az ételek nem szerepelnek ennek az étteremnek az étlapján: ${missing[1]}`
+  }
+
+  return message
+}
+
 export function getErrorMessage(error: unknown): string {
-  return ApiError.from(error).message
+  return localizeMessage(ApiError.from(error).message)
 }

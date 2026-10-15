@@ -5,7 +5,8 @@ import { ThemeProvider } from "next-themes"
 import { useState, type ReactNode } from "react"
 import { Toaster } from "@/components/ui/sonner"
 import { ApiError } from "@/lib/api/errors"
-import { AuthProvider } from "@/lib/auth/auth-provider"
+import { AuthProvider, useAuth } from "@/lib/auth/auth-provider"
+import { LocationProvider } from "@/lib/location/location-provider"
 
 function createQueryClient() {
   return new QueryClient({
@@ -22,6 +23,12 @@ function createQueryClient() {
   })
 }
 
+/** The location belongs to the signed-in user: it resets on logout or user switch. */
+function UserScopedLocation({ children }: { children: ReactNode }) {
+  const { user } = useAuth()
+  return <LocationProvider key={user?.id ?? "guest"}>{children}</LocationProvider>
+}
+
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(createQueryClient)
 
@@ -33,7 +40,9 @@ export function Providers({ children }: { children: ReactNode }) {
       disableTransitionOnChange
     >
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <UserScopedLocation>{children}</UserScopedLocation>
+        </AuthProvider>
         <Toaster richColors position="top-center" />
       </QueryClientProvider>
     </ThemeProvider>

@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { RestaurantDetail } from "@/components/restaurants/restaurant-detail"
 import { Skeleton } from "@/components/ui/skeleton"
 
-export const metadata: Metadata = { title: "Menu" }
+export const metadata: Metadata = { title: "Étlap" }
 
 type Props = PageProps<"/restaurants/[id]">
 

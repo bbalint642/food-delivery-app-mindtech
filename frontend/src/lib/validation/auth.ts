@@ -9,9 +9,16 @@ const email = z
   .max(255, "Email is too long")
   .pipe(z.email("Enter a valid email address"))
 
+const loginEmail = z
+  .string()
+  .trim()
+  .min(1, "Az e-mail-cím megadása kötelező")
+  .max(255, "Az e-mail-cím túl hosszú")
+  .pipe(z.email("Adj meg érvényes e-mail-címet"))
+
 export const loginSchema = z.object({
-  email,
-  password: z.string().min(1, "Password is required").max(72),
+  email: loginEmail,
+  password: z.string().min(1, "A jelszó megadása kötelező").max(72),
 })
 
 export const registerSchema = z.object({

@@ -20,6 +20,7 @@ import type {
   RegisterInput,
   User,
 } from "@/lib/api/types"
+import { clearCart } from "@/lib/cart/cart-store"
 import { LOGIN_PATH, safeRedirectPath } from "./redirect"
 import { clearToken, getToken, setToken, subscribeToToken } from "./token"
 
@@ -58,6 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const endSession = useCallback(() => {
     clearToken()
+    clearCart()
     queryClient.clear()
     router.replace(LOGIN_PATH)
   }, [queryClient, router])
@@ -65,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Any 401 on an authenticated request (expired/revoked token) logs out.
   useEffect(() => {
     setUnauthorizedHandler(() => {
-      toast.error("Your session has expired. Please log in again.", {
+      toast.error("A munkamenet lejárt. Jelentkezz be újra.", {
         id: SESSION_EXPIRED_TOAST_ID,
       })
       endSession()

@@ -3,8 +3,7 @@ import { FloatingDecor } from "./floating-decor"
 
 /**
  * Leaves and tomatoes arranged around the platter, clockwise from the top:
- * some sit inside the photo, others spill over the panel edge. The top
- * tomato is slightly blurred for depth of field.
+ * some sit inside the photo, others spill over the panel edge.
  * Vertical/horizontal positions inside the photo are percentages so they
  * follow the panel size; overflow past the edge is in px.
  */
@@ -16,24 +15,26 @@ const ARC_DECORATIONS = [
     rotate: -18,
     duration: 7,
     delay: 0.8,
-    blur: 1.5,
     className: "-top-[53px] left-[18%]",
   },
   {
-    // Leaf spilling over the right edge, upper third
-    src: "/images/auth/bazsalikom-level.webp",
-    size: 104,
-    rotate: 20,
-    duration: 6.5,
-    className: "top-[24%] -right-[86px]",
-  },
-  {
+    // Orange tomato peeking over the top edge, right of centre
     src: "/images/auth/narancs-paradicsom.webp",
     size: 70,
     rotate: 10,
     duration: 6,
     delay: 1,
-    className: "top-[42%] -right-10",
+    className: "-top-[45px] left-[calc(63%-35px)]",
+  },
+  {
+    // Leaf spilling over the right edge, upper third (mirrored both ways)
+    src: "/images/auth/bazsalikom-level.webp",
+    size: 104,
+    rotate: -25,
+    duration: 6.5,
+    flipY: true,
+    flipX: true,
+    className: "top-[24%] -right-[86px]",
   },
   {
     // Whole red tomato spilling over the right edge, near the bottom
@@ -48,7 +49,7 @@ const ARC_DECORATIONS = [
     // Leaf resting on the photo near the bottom-left
     src: "/images/auth/bazsalikom-level.webp",
     size: 96,
-    rotate: -160,
+    rotate: -40,
     duration: 7.5,
     delay: 1.4,
     className: "bottom-[4%] left-[22%]",
@@ -62,14 +63,11 @@ const ARC_DECORATIONS = [
  */
 const BOWL_IN_PHOTO = { left: "18.63%", top: "1.41%", width: "69.06%" }
 
-/** Green sauce + spoon cut-out (830x720): scale 0.493, offset (83, 651) px. */
-const SAUCE_IN_PHOTO = { left: "5.19%", top: "61.01%", width: "25.56%" }
-
 /**
  * Right-hand side of the auth panel: the salad photo fills the whole area
- * (cropped, never distorted). On top of it, cut-outs of the platter and the
- * sauce bowl are aligned pixel-exactly with the photo but are NOT clipped,
- * so both stay fully visible and spill over the photo's edges.
+ * (cropped, never distorted). On top of it, a cut-out of the same platter
+ * is aligned pixel-exactly with the photo but is NOT clipped, so the whole
+ * bowl stays visible and spills over the panel edge.
  */
 export function AuthShowcase() {
   return (
@@ -91,12 +89,10 @@ export function AuthShowcase() {
       {/*
         Unclipped box with the photo's exact object-cover geometry: as tall
         as the column, 3:2 wide, centred. The column is always narrower than
-        3:2 (≤ 640px wide, ≥ 520px tall), so cover scales by height, exactly
+        3:2 (≤ ~560px wide, ≥ 520px tall), so cover scales by height, exactly
         like this box does.
-        Only from xl up: the cut-outs spill towards the form, and only the
-        wide xl panel leaves enough room for them next to the inputs.
       */}
-      <div className="pointer-events-none absolute inset-y-0 left-1/2 hidden aspect-[1600/1067] -translate-x-1/2 xl:block">
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 aspect-[1600/1067] -translate-x-1/2">
         <div
           className="absolute aspect-[882/715] drop-shadow-[0_18px_24px_rgb(0_0_0/0.18)]"
           style={BOWL_IN_PHOTO}
@@ -107,18 +103,6 @@ export function AuthShowcase() {
             fill
             priority
             sizes="(min-width: 768px) 600px, 100vw"
-          />
-        </div>
-        {/* In the photo the sauce bowl sits in front of the platter. */}
-        <div
-          className="absolute aspect-[830/720] drop-shadow-[0_14px_18px_rgb(0_0_0/0.2)]"
-          style={SAUCE_IN_PHOTO}
-        >
-          <Image
-            src="/images/auth/green-sauce.webp"
-            alt=""
-            fill
-            sizes="(min-width: 768px) 240px, 100vw"
           />
         </div>
       </div>

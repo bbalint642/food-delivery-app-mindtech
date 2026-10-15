@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, type ComponentPropsWithoutRef } from "react"
-import { useInView, useMotionValue, useSpring } from "motion/react"
+import { useInView, useMotionValue, useReducedMotion, useSpring } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
@@ -11,6 +11,7 @@ interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   direction?: "up" | "down"
   delay?: number
   decimalPlaces?: number
+  locale?: string
 }
 
 export function NumberTicker({
@@ -20,17 +21,25 @@ export function NumberTicker({
   delay = 0,
   className,
   decimalPlaces = 0,
+  locale = "en-US",
   ...props
 }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null)
+  const reduceMotion = useReducedMotion()
   const motionValue = useMotionValue(direction === "down" ? value : startValue)
   const springValue = useSpring(motionValue, {
     damping: 60,
     stiffness: 100,
   })
   const isInView = useInView(ref, { once: true, margin: "0px" })
+  const formatted = new Intl.NumberFormat(locale, {
+    minimumFractionDigits: decimalPlaces,
+    maximumFractionDigits: decimalPlaces,
+  }).format(value)
 
   useEffect(() => {
+    if (reduceMotion) return
+
     let timer: ReturnType<typeof setTimeout> | null = null
 
     if (isInView) {
@@ -44,31 +53,28 @@ export function NumberTicker({
         clearTimeout(timer)
       }
     }
-  }, [motionValue, isInView, delay, value, direction, startValue])
+  }, [motionValue, isInView, delay, value, direction, startValue, reduceMotion])
 
-  useEffect(
-    () =>
-      springValue.on("change", (latest) => {
-        if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat("en-US", {
-            minimumFractionDigits: decimalPlaces,
-            maximumFractionDigits: decimalPlaces,
-          }).format(Number(latest.toFixed(decimalPlaces)))
-        }
-      }),
-    [springValue, decimalPlaces]
-  )
+  useEffect(() => {
+    if (reduceMotion) return
+
+    return springValue.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = new Intl.NumberFormat(locale, {
+          minimumFractionDigits: decimalPlaces,
+          maximumFractionDigits: decimalPlaces,
+        }).format(Number(latest.toFixed(decimalPlaces)))
+      }
+    })
+  }, [springValue, decimalPlaces, locale, reduceMotion])
 
   return (
     <span
       ref={ref}
-      className={cn(
-        "inline-block tracking-wider text-black tabular-nums dark:text-white",
-        className
-      )}
+      className={cn("inline-block tabular-nums", className)}
       {...props}
     >
-      {startValue}
+      {reduceMotion ? formatted : startValue}
     </span>
   )
 }

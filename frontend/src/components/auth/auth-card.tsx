@@ -3,7 +3,7 @@ import { BlurFade } from "@/components/ui/blur-fade"
 
 interface AuthCardProps {
   title: string
-  description: string
+  description: ReactNode
   children: ReactNode
   footer: ReactNode
 }

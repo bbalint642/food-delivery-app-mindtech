@@ -10,7 +10,7 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
   const currentIndex = statusIndex(status)
 
   return (
-    <ol className="flex flex-col" aria-label="Order progress">
+    <ol className="flex flex-col" aria-label="A rendelés állapota">
       {ORDER_STATUSES.map((step, index) => {
         const { label, description, icon: Icon } = ORDER_STATUS_META[step]
         const isDone = index < currentIndex

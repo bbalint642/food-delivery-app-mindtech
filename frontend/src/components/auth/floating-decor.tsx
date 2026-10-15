@@ -17,6 +17,10 @@ interface FloatingDecorProps {
   delay?: number
   /** Gaussian blur in px, for a depth-of-field "out of focus" look. */
   blur?: number
+  /** Mirror the image vertically. */
+  flipY?: boolean
+  /** Mirror the image horizontally. */
+  flipX?: boolean
 }
 
 /**
@@ -31,7 +35,9 @@ export function FloatingDecor({
   duration = 6,
   delay = 0,
   blur = 0,
-}: FloatingDecorProps) {
+  flipY = false,
+  flipX = false,
+}:FloatingDecorProps) {
   const reducedMotion = useReducedMotion()
 
   return (
@@ -57,7 +63,12 @@ export function FloatingDecor({
         fill
         sizes={`${size * 2}px`}
         className="object-contain"
-        style={blur ? { filter: `blur(${blur}px)` } : undefined}
+        style={{
+          ...(blur ? { filter: `blur(${blur}px)` } : null),
+          ...(flipX || flipY
+            ? { transform: `scale(${flipX ? -1 : 1}, ${flipY ? -1 : 1})` }
+            : null),
+        }}
       />
     </motion.div>
   )

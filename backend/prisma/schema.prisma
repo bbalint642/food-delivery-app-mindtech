@@ -39,6 +39,8 @@ model Restaurant {
   name        String   @db.VarChar(120)
   description String
   cuisine     String   @db.VarChar(60)
+  /// Average guest rating, one decimal place, between 0.0 and 5.0.
+  rating      Decimal  @db.Decimal(2, 1)
   address     String   @db.VarChar(255)
   imageUrl    String?  @map("image_url")
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
@@ -55,9 +57,24 @@ model MenuItem {
   restaurantId String   @map("restaurant_id") @db.Uuid
   name         String   @db.VarChar(120)
   description  String
-  /// Price in the smallest currency unit (cents) to avoid floating point errors.
-  priceCents   Int      @map("price_cents")
-  isAvailable  Boolean  @default(true) @map("is_available")
+  /// Price in the smallest currency unit (fillér) to avoid floating point errors.
+  /// When the item is on sale, this is the discounted price.
+  priceCents          Int      @map("price_cents")
+  isOnSale            Boolean  @default(false) @map("is_on_sale")
+  /// List price in fillér before the discount. Null when the item is not on sale.
+  compareAtPriceCents Int?     @map("compare_at_price_cents")
+  isAvailable         Boolean  @default(true) @map("is_available")
+  imageUrl            String?  @map("image_url")
+  /// EU major allergens present in the dish, in Hungarian.
+  allergens           String[] @default([])
+  /// Estimated energy per serving.
+  caloriesKcal        Int      @default(0) @map("calories_kcal")
+  /// Estimated protein per serving, in grams.
+  proteinGrams        Int      @default(0) @map("protein_grams")
+  /// Estimated carbohydrates per serving, in grams.
+  carbsGrams          Int      @default(0) @map("carbs_grams")
+  /// Estimated fat per serving, in grams.
+  fatGrams            Int      @default(0) @map("fat_grams")
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 

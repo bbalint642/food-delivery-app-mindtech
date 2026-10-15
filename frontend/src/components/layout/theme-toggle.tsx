@@ -2,14 +2,14 @@
 
 import { useTheme } from "next-themes"
 import { useSyncExternalStore } from "react"
-import { buttonVariants } from "@/components/ui/button"
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { cn } from "@/lib/utils"
+import { ThemeSwitchArt } from "./theme-switch-art"
 
 const noopSubscribe = () => () => {}
 
 /**
- * Animated light/dark switch, controlled by next-themes so the choice is
+ * Illustrated day/night pill switch, controlled by next-themes so the choice is
  * persisted and every `useTheme()` consumer (e.g. the toaster) stays in sync.
  */
 export function ThemeToggle({ className }: { className?: string }) {
@@ -23,8 +23,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   )
 
   const classes = cn(
-    buttonVariants({ variant: "ghost", size: "icon-lg" }),
-    "rounded-full",
+    "relative inline-block h-8 w-[72px] shrink-0 cursor-pointer overflow-hidden rounded-full outline-none ring-1 ring-black/10 transition-shadow focus-visible:ring-3 focus-visible:ring-ring/60 dark:ring-white/10",
     className,
   )
 
@@ -38,8 +37,11 @@ export function ThemeToggle({ className }: { className?: string }) {
       theme={resolvedTheme === "dark" ? "dark" : "light"}
       onThemeChange={setTheme}
       duration={500}
+      role="switch"
+      aria-checked={resolvedTheme === "dark"}
+      renderIcon={(isDark) => <ThemeSwitchArt isDark={isDark} />}
       aria-label={
-        resolvedTheme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+        resolvedTheme === "dark" ? "Váltás világos témára" : "Váltás sötét témára"
       }
     />
   )

@@ -1,7 +1,6 @@
 "use client"
 
-import { LogOutIcon } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { ChevronDownIcon, LogOutIcon, UserIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -14,20 +13,11 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAuth } from "@/lib/auth/auth-provider"
 
-function initials(name: string): string {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]!.toUpperCase())
-    .join("")
-}
-
 export function UserMenu() {
   const { user, logout } = useAuth()
 
   if (!user) {
-    return <Skeleton className="size-9 rounded-full" />
+    return <Skeleton className="h-9 w-36 rounded-full" />
   }
 
   return (
@@ -35,15 +25,12 @@ export function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="icon"
-          className="rounded-full"
-          aria-label="Open user menu"
+          className="h-9 gap-2 rounded-full bg-muted px-2.5 text-sm font-medium text-foreground hover:bg-muted/80 sm:px-3"
+          aria-label={`Felhasználói menü, ${user.name}`}
         >
-          <Avatar className="size-9">
-            <AvatarFallback className="bg-primary/10 font-medium text-primary">
-              {initials(user.name)}
-            </AvatarFallback>
-          </Avatar>
+          <UserIcon className="size-4" />
+          <span className="max-w-24 truncate sm:max-w-40">{user.name}</span>
+          <ChevronDownIcon className="size-3.5 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
@@ -56,7 +43,7 @@ export function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={logout}>
           <LogOutIcon />
-          Log out
+          Kijelentkezés
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
@@ -7,8 +7,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Public } from '../auth/decorators/public.decorator';
+import { CuisineFacetDto } from './dto/cuisine-facet.dto';
+import { DealDto } from './dto/deal.dto';
+import { DealsQueryDto } from './dto/deals-query.dto';
+import { ListRestaurantsQueryDto } from './dto/list-restaurants-query.dto';
 import { RestaurantDetailDto } from './dto/restaurant-detail.dto';
-import { RestaurantDto } from './dto/restaurant.dto';
+import { RestaurantListItemDto } from './dto/restaurant-list-item.dto';
 import { RestaurantsService } from './restaurants.service';
 
 /** Read-only catalogue: browsable without logging in. */
@@ -19,10 +23,34 @@ export class RestaurantsController {
   constructor(private readonly restaurantsService: RestaurantsService) {}
 
   @Get()
-  @ApiOperation({ summary: 'List all restaurants' })
-  @ApiOkResponse({ type: [RestaurantDto] })
-  findAll(): Promise<RestaurantDto[]> {
-    return this.restaurantsService.findAll();
+  @ApiOperation({
+    summary: 'List restaurants',
+    description:
+      'Without query parameters every restaurant is returned. Optional filters narrow the list; they are combined with AND.',
+  })
+  @ApiOkResponse({ type: [RestaurantListItemDto] })
+  @ApiBadRequestResponse({ description: 'Invalid filter value' })
+  findAll(
+    @Query() query: ListRestaurantsQueryDto,
+  ): Promise<RestaurantListItemDto[]> {
+    return this.restaurantsService.findAll(query);
+  }
+
+  // Static routes are declared before `:id`, otherwise they would be
+  // matched (and rejected) by the UUID route.
+  @Get('cuisines')
+  @ApiOperation({ summary: 'List cuisines with their restaurant count' })
+  @ApiOkResponse({ type: [CuisineFacetDto] })
+  listCuisines(): Promise<CuisineFacetDto[]> {
+    return this.restaurantsService.listCuisines();
+  }
+
+  @Get('deals')
+  @ApiOperation({ summary: 'Orderable discounted dishes in random order' })
+  @ApiOkResponse({ type: [DealDto] })
+  @ApiBadRequestResponse({ description: 'Invalid limit' })
+  findDeals(@Query() query: DealsQueryDto): Promise<DealDto[]> {
+    return this.restaurantsService.findDeals(query.limit);
   }
 
   @Get(':id')

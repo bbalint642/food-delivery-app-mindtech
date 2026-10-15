@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { OrderDetail } from "@/components/orders/order-detail"
 import { Skeleton } from "@/components/ui/skeleton"
 
-export const metadata: Metadata = { title: "Order" }
+export const metadata: Metadata = { title: "Rendelés" }
 
 type Props = PageProps<"/orders/[id]">
 

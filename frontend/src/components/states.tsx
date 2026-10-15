@@ -37,13 +37,13 @@ export function ErrorState({
   return (
     <StateMessage
       icon={<AlertTriangleIcon />}
-      title="Something went wrong"
+      title="Valami hiba történt"
       description={message}
       action={
         onRetry && (
           <Button variant="outline" onClick={onRetry}>
             <RotateCwIcon />
-            Try again
+            Újra
           </Button>
         )
       }

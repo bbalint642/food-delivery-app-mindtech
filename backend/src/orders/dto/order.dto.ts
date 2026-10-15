@@ -33,15 +33,15 @@ export class OrderItemDto {
   name!: string;
 
   @ApiProperty({
-    example: 1190,
-    description: 'Unit price in cents at the time of ordering.',
+    example: 349000,
+    description: 'Unit price in fillér (HUF) at the time of ordering.',
   })
   unitPriceCents!: number;
 
   @ApiProperty({ example: 2 })
   quantity!: number;
 
-  @ApiProperty({ example: 2380 })
+  @ApiProperty({ example: 698000 })
   lineTotalCents!: number;
 }
 
@@ -58,7 +58,7 @@ export class OrderDto {
   @ApiProperty({ type: [OrderItemDto] })
   items!: OrderItemDto[];
 
-  @ApiProperty({ example: 2380, description: 'Order total in cents (EUR).' })
+  @ApiProperty({ example: 698000, description: 'Order total in fillér (HUF).' })
   totalCents!: number;
 
   @ApiProperty()

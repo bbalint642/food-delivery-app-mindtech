@@ -1,15 +1,43 @@
 "use client"
 
 import { ShoppingBagIcon, Trash2Icon } from "lucide-react"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { Button } from "@/components/ui/button"
-import { NumberTicker } from "@/components/ui/number-ticker"
 import { Separator } from "@/components/ui/separator"
 import { ShimmerButton } from "@/components/ui/shimmer-button"
 import { Spinner } from "@/components/ui/spinner"
+import { TextAnimate } from "@/components/ui/text-animate"
 import type { CartLine } from "@/lib/cart/cart"
 import { formatPrice } from "@/lib/format"
 import { QuantityStepper } from "./quantity-stepper"
+
+function CartAmount({
+  cents,
+  className,
+}: {
+  cents: number
+  className?: string
+}) {
+  const text = formatPrice(cents)
+  const reduceMotion = useReducedMotion()
+
+  if (reduceMotion) {
+    return <span className={className}>{text}</span>
+  }
+
+  return (
+    <TextAnimate
+      key={text}
+      as="span"
+      animation="blurInUp"
+      by="character"
+      once
+      className={className}
+    >
+      {text}
+    </TextAnimate>
+  )
+}
 
 interface CartPanelProps {
   lines: CartLine[]
@@ -34,8 +62,8 @@ export function CartPanel({
     return (
       <div className="flex flex-col items-center gap-2 py-10 text-center text-muted-foreground">
         <ShoppingBagIcon className="size-10" />
-        <p className="font-medium text-foreground">Your cart is empty</p>
-        <p className="text-sm">Add something tasty from the menu.</p>
+        <p className="font-medium text-foreground">A kosár üres</p>
+        <p className="text-sm">Válassz valami finomat az étlapról.</p>
       </div>
     )
   }
@@ -58,7 +86,7 @@ export function CartPanel({
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium">{line.name}</p>
                   <p className="text-xs text-muted-foreground">
-                    {formatPrice(line.unitPriceCents * line.quantity)}
+                    <CartAmount cents={line.unitPriceCents * line.quantity} />
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
@@ -72,7 +100,7 @@ export function CartPanel({
                     variant="ghost"
                     size="icon-sm"
                     onClick={() => onRemove(line.menuItemId)}
-                    aria-label={`Remove ${line.name} from cart`}
+                    aria-label={`${line.name} törlése a kosárból`}
                   >
                     <Trash2Icon />
                   </Button>
@@ -86,10 +114,8 @@ export function CartPanel({
       <Separator />
 
       <div className="flex items-baseline justify-between">
-        <span className="text-sm text-muted-foreground">Total</span>
-        <span className="text-xl font-semibold" aria-label={formatPrice(totalCents)}>
-          €<NumberTicker value={totalCents / 100} decimalPlaces={2} className="tracking-normal" />
-        </span>
+        <span className="text-sm text-muted-foreground">Összesen</span>
+        <CartAmount cents={totalCents} className="text-xl font-semibold" />
       </div>
 
       <ShimmerButton
@@ -102,10 +128,10 @@ export function CartPanel({
         className="w-full gap-2 py-3 font-medium text-primary-foreground disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isPlacingOrder && <Spinner />}
-        {isPlacingOrder ? "Placing order…" : "Place Order"}
+        {isPlacingOrder ? "Rendelés leadása…" : "Rendelés leadása"}
       </ShimmerButton>
       <p className="text-center text-xs text-muted-foreground">
-        Prices are confirmed when your order is placed.
+        Az árak a rendelés leadásakor véglegesednek.
       </p>
     </div>
   )

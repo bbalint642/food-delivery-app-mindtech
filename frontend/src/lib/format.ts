@@ -1,14 +1,25 @@
-const priceFormatter = new Intl.NumberFormat("en-IE", {
+const priceFormatter = new Intl.NumberFormat("hu-HU", {
   style: "currency",
-  currency: "EUR",
+  currency: "HUF",
+  maximumFractionDigits: 0,
 })
 
-/** Formats integer cents, e.g. 1190 → "€11.90". */
+const ratingFormatter = new Intl.NumberFormat("hu-HU", {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+})
+
+/** Formats a restaurant rating, e.g. 4.7 → "4,7". */
+export function formatRating(rating: number): string {
+  return ratingFormatter.format(rating)
+}
+
+/** Formats integer fillér, e.g. 349000 → "3 490 Ft". */
 export function formatPrice(cents: number): string {
   return priceFormatter.format(cents / 100)
 }
 
-const dateTimeFormatter = new Intl.DateTimeFormat("en-GB", {
+const dateTimeFormatter = new Intl.DateTimeFormat("hu-HU", {
   dateStyle: "medium",
   timeStyle: "short",
 })

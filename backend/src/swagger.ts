@@ -8,7 +8,8 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle('Mini Food Ordering API')
     .setDescription(
       'REST API for browsing restaurants and placing food orders. ' +
-        'Authenticate via `POST /auth/login` and use the returned token as a Bearer token.',
+        'Authenticate via `POST /auth/login` and use the returned token as a Bearer token. ' +
+        'Live order status is pushed on `GET /orders/{id}/events`.',
     )
     .setVersion('1.0.0')
     .addBearerAuth()

@@ -13,28 +13,28 @@ export const ORDER_STATUS_META: Record<
   { label: string; description: string; icon: LucideIcon }
 > = {
   PENDING: {
-    label: "Order placed",
-    description: "Waiting for the restaurant to confirm.",
+    label: "Rendelés leadva",
+    description: "Várakozás az étterem visszaigazolására.",
     icon: ClockIcon,
   },
   CONFIRMED: {
-    label: "Confirmed",
-    description: "The restaurant accepted your order.",
+    label: "Visszaigazolva",
+    description: "Az étterem elfogadta a rendelésed.",
     icon: CircleCheckIcon,
   },
   PREPARING: {
-    label: "Preparing",
-    description: "Your food is being prepared.",
+    label: "Készül",
+    description: "Az étel készítése folyamatban.",
     icon: ChefHatIcon,
   },
   DELIVERING: {
-    label: "On the way",
-    description: "A courier is bringing your order.",
+    label: "Úton",
+    description: "A futár viszi a rendelésed.",
     icon: BikeIcon,
   },
   DELIVERED: {
-    label: "Delivered",
-    description: "Enjoy your meal!",
+    label: "Kiszállítva",
+    description: "Jó étvágyat!",
     icon: PackageCheckIcon,
   },
 }

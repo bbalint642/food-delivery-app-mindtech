@@ -4,12 +4,15 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { Button } from "@/components/ui/button"
 import { MAX_QUANTITY } from "@/lib/cart/cart"
+import { cn } from "@/lib/utils"
 
 interface QuantityStepperProps {
   quantity: number
   itemName: string
   onIncrement: () => void
   onDecrement: () => void
+  decrementDisabled?: boolean
+  className?: string
 }
 
 export function QuantityStepper({
@@ -17,14 +20,22 @@ export function QuantityStepper({
   itemName,
   onIncrement,
   onDecrement,
+  decrementDisabled = false,
+  className,
 }: QuantityStepperProps) {
   return (
-    <div className="flex items-center gap-1 rounded-lg border bg-background p-0.5">
+    <div
+      className={cn(
+        "flex items-center gap-1 rounded-lg border bg-background p-0.5",
+        className,
+      )}
+    >
       <Button
         variant="ghost"
         size="icon-sm"
         onClick={onDecrement}
-        aria-label={`Remove one ${itemName}`}
+        disabled={decrementDisabled}
+        aria-label={`Egy ${itemName} elvétele`}
       >
         <MinusIcon />
       </Button>
@@ -48,7 +59,7 @@ export function QuantityStepper({
         size="icon-sm"
         onClick={onIncrement}
         disabled={quantity >= MAX_QUANTITY}
-        aria-label={`Add one more ${itemName}`}
+        aria-label={`Még egy ${itemName} hozzáadása`}
       >
         <PlusIcon />
       </Button>

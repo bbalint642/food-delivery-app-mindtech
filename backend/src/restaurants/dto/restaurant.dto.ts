@@ -11,8 +11,11 @@ export class RestaurantDto {
   @ApiProperty({ example: 'Wood-fired Neapolitan pizzas.' })
   description!: string;
 
-  @ApiProperty({ example: 'Italian' })
+  @ApiProperty({ example: 'Olasz' })
   cuisine!: string;
+
+  @ApiProperty({ example: 4.7, minimum: 0, maximum: 5 })
+  rating!: number;
 
   @ApiProperty({ example: '12 Király utca, Budapest' })
   address!: string;
@@ -26,6 +29,7 @@ export class RestaurantDto {
       name: restaurant.name,
       description: restaurant.description,
       cuisine: restaurant.cuisine,
+      rating: Number(restaurant.rating),
       address: restaurant.address,
       imageUrl: restaurant.imageUrl,
     };

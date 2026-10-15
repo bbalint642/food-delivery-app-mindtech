@@ -48,6 +48,18 @@
   --radius-4xl: calc(var(--radius) * 2.6);
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
   --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+  --animate-menu-highlight: menu-highlight 0.9s ease-out 2 forwards;
+  @keyframes menu-highlight {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 0%, transparent);
+    }
+    45% {
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 55%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 2px color-mix(in oklch, var(--primary) 80%, transparent);
+    }
+  }
   @keyframes shimmer-slide {
   to {
     transform: translate(calc(100cqw - 100%), 0);
@@ -163,4 +175,24 @@
 /* Scoped to theme toggles only, so other view transitions are unaffected. */
 html[data-magicui-theme-vt="active"]::view-transition-group(root) {
   animation-duration: var(--magicui-theme-toggle-vt-duration);
+}
+
+/*
+ * Always reserve the scrollbar's space, so the layout does not jump
+ * sideways when filtering makes the page shorter or longer than the
+ * viewport (scrollbar appearing / disappearing).
+ */
+html {
+  scrollbar-gutter: stable;
+}
+
+/*
+ * Radix overlays (menus, sheets) lock scrolling via react-remove-scroll-bar,
+ * which compensates the vanished scrollbar with `margin-right` on <body>.
+ * With a stable gutter that space is already reserved, so the compensation
+ * would shift the page instead; neutralise it.
+ */
+html body[data-scroll-locked] {
+  margin-right: 0 !important;
+  --removed-body-scroll-bar-size: 0px;
 }

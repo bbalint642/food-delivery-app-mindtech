@@ -2,11 +2,14 @@ import { apiClient } from "./client"
 import type {
   AuthResponse,
   CreateOrderInput,
+  CuisineFacet,
+  Deal,
   LoginInput,
   Order,
   RegisterInput,
-  Restaurant,
   RestaurantDetail,
+  RestaurantFilters,
+  RestaurantListItem,
   User,
 } from "./types"
 
@@ -19,7 +22,20 @@ export const authApi = {
 }
 
 export const restaurantsApi = {
-  list: () => apiClient.get<Restaurant[]>("/restaurants").then((r) => r.data),
+  list: (filters: RestaurantFilters = {}) =>
+    apiClient
+      .get<RestaurantListItem[]>("/restaurants", {
+        params: filters,
+        // Arrays as repeated keys (`cuisine=a&cuisine=b`), as the API expects.
+        paramsSerializer: { indexes: null },
+      })
+      .then((r) => r.data),
+  cuisines: () =>
+    apiClient.get<CuisineFacet[]>("/restaurants/cuisines").then((r) => r.data),
+  deals: (limit?: number) =>
+    apiClient
+      .get<Deal[]>("/restaurants/deals", { params: { limit } })
+      .then((r) => r.data),
   get: (id: string) =>
     apiClient
       .get<RestaurantDetail>(`/restaurants/${encodeURIComponent(id)}`)
@@ -36,7 +52,10 @@ export const ordersApi = {
 /** Centralized TanStack Query keys. */
 export const queryKeys = {
   me: ["auth", "me"] as const,
-  restaurants: ["restaurants"] as const,
+  restaurants: (filters: RestaurantFilters = {}) =>
+    ["restaurants", "list", filters] as const,
+  cuisines: ["restaurants", "cuisines"] as const,
+  deals: ["restaurants", "deals"] as const,
   restaurant: (id: string) => ["restaurants", id] as const,
   order: (id: string) => ["orders", id] as const,
 }

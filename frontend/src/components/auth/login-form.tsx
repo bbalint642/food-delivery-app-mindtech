@@ -28,7 +28,7 @@ export function LoginForm() {
       form.setError("root.server", {
         message:
           apiError.status === 401
-            ? "Invalid email or password."
+            ? "Érvénytelen e-mail-cím vagy jelszó."
             : apiError.message,
       })
     }
@@ -43,21 +43,21 @@ export function LoginForm() {
         <FormTextField
           control={form.control}
           name="email"
-          label="Email"
+          label="E-mail"
           type="email"
           autoComplete="email"
-          placeholder="you@example.com"
+          placeholder="te@pelda.hu"
         />
         <FormTextField
           control={form.control}
           name="password"
-          label="Password"
+          label="Jelszó"
           type="password"
           autoComplete="current-password"
         />
         <Button type="submit" size="lg" disabled={isSubmitting}>
           {isSubmitting && <Spinner />}
-          Log in
+          Bejelentkezés
         </Button>
       </FieldGroup>
     </form>
