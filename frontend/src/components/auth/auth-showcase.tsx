@@ -28,17 +28,18 @@ export function AuthShowcase() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <motion.div
-          className="size-full"
-          animate={reducedMotion ? undefined : { rotate: [0, 3, 0, -3, 0] }}
+          className="relative size-full overflow-hidden rounded-full ring-8 ring-white/80 dark:ring-white/10"
+          animate={reducedMotion ? undefined : { rotate: [0, 2, 0, -2, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         >
+          {/* Cropped around the platter (centre of the photo is at ~53% / 46%). */}
           <Image
-            src="/images/auth/salad-bowl.svg"
-            alt="A fresh salad bowl with greens, chickpeas and avocado"
+            src="/images/auth/salad.webp"
+            alt="A platter of taco salad with avocado, tomatoes, corn and cilantro"
             fill
             priority
-            unoptimized
-            sizes="520px"
+            sizes="(min-width: 1024px) 540px, 460px"
+            className="object-cover object-[53%_46%]"
           />
         </motion.div>
       </motion.div>
