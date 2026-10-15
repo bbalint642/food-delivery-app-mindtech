@@ -1,48 +1,27 @@
-"use client"
-
-import { motion, useReducedMotion } from "motion/react"
 import Image from "next/image"
 import { FloatingDecor } from "./floating-decor"
 
 /**
- * Right-hand side of the auth panel: a salad bowl that spills over the
- * panel edge, plus floating leaves and a tomato around the card.
+ * Right-hand side of the auth panel: the salad photo fills the whole area
+ * (cropped, never distorted), with a leaf and a tomato spilling over the
+ * panel edge.
  */
 export function AuthShowcase() {
-  const reducedMotion = useReducedMotion()
-
   return (
-    <div className="relative hidden min-h-[520px] overflow-visible md:block">
-      {/* Gradient backdrop (clipped to the panel) */}
-      <div className="absolute inset-0 overflow-hidden md:rounded-r-[2rem]">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-100 via-rose-50 to-emerald-50 dark:from-orange-950/40 dark:via-neutral-900 dark:to-emerald-950/30" />
-        <div className="absolute -top-24 -right-24 size-72 rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute -bottom-20 -left-16 size-64 rounded-full bg-emerald-400/20 blur-3xl" />
+    <div className="relative hidden min-h-[520px] md:block">
+      {/* Photo clipped to the panel's rounded right corners */}
+      <div className="absolute inset-0 overflow-hidden rounded-r-[2rem]">
+        <Image
+          src="/images/auth/salad.webp"
+          alt="A platter of taco salad with avocado, tomatoes, corn and cilantro"
+          fill
+          priority
+          // With object-cover the 3:2 photo is scaled to the panel height
+          // (~550px), so it renders ~1.5x wider than the column itself.
+          sizes="(min-width: 768px) 840px, 100vw"
+          className="object-cover"
+        />
       </div>
-
-      {/* Salad bowl, intentionally overflowing the top-right edge */}
-      <motion.div
-        className="absolute -top-16 -right-24 size-[460px] drop-shadow-2xl lg:-top-20 lg:-right-28 lg:size-[540px]"
-        initial={{ opacity: 0, scale: 0.92, rotate: -8 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <motion.div
-          className="relative size-full overflow-hidden rounded-full ring-8 ring-white/80 dark:ring-white/10"
-          animate={reducedMotion ? undefined : { rotate: [0, 2, 0, -2, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {/* Cropped around the platter (centre of the photo is at ~53% / 46%). */}
-          <Image
-            src="/images/auth/salad.webp"
-            alt="A platter of taco salad with avocado, tomatoes, corn and cilantro"
-            fill
-            priority
-            sizes="(min-width: 1024px) 540px, 460px"
-            className="object-cover object-[53%_46%]"
-          />
-        </motion.div>
-      </motion.div>
 
       <FloatingDecor
         src="/images/auth/leaf.svg"
@@ -52,28 +31,12 @@ export function AuthShowcase() {
         className="-right-9 top-[58%]"
       />
       <FloatingDecor
-        src="/images/auth/leaf.svg"
-        size={52}
-        rotate={120}
-        duration={7}
-        delay={0.8}
-        className="bottom-[14%] left-[12%]"
-      />
-      <FloatingDecor
         src="/images/auth/tomato.svg"
         size={88}
         rotate={-12}
         duration={5.5}
         delay={0.4}
         className="-right-6 -bottom-8"
-      />
-      <FloatingDecor
-        src="/images/auth/tomato.svg"
-        size={48}
-        rotate={18}
-        duration={6.5}
-        delay={1.2}
-        className="bottom-[-10px] left-[42%]"
       />
     </div>
   )
